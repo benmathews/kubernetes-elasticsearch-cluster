@@ -1,0 +1,27 @@
+cluster:
+  name: ${CLUSTER_NAME}
+
+node:
+  master: ${NODE_MASTER}
+  name: ${NODE_NAME}
+  data: ${NODE_DATA}
+  ingest: ${NODE_INGEST}
+network.host: "_site_"
+
+path:
+  data: /data/data
+  logs: /data/log
+
+bootstrap:
+  memory_lock: true
+
+http:
+  enabled: ${HTTP_ENABLE}
+  compression: true
+  cors:
+    enabled: true
+    allow-origin: "*"
+
+discovery:
+  zen:
+    minimum_master_nodes: ${NUMBER_OF_MASTERS}

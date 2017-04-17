@@ -46,18 +46,13 @@ Providing your own version of [the images automatically built from this reposito
 <a id="test">
 ## Test
 
-
 ### Deploy
 
 ```
+kubectl create configmap es-config --from-file=es-config
 kubectl create -f es-discovery-svc.yaml
 kubectl create -f es-svc.yaml
 kubectl create -f es-master.yaml
-```
-
-Wait until `es-master` deployment is provisioned, and
-
-```
 kubectl create -f es-client.yaml
 kubectl create -f es-data.yaml
 ```
@@ -213,6 +208,17 @@ If you want to remove the curator job, just run:
 ```
 kubectl delete cronjob curator
 kubectl delete configmap curator-config
+```
+
+### Cleanup
+
+```
+kubectl delete configmap es-config
+kubectl delete svc elasticsearch
+kubectl delete svc elasticsearch-discovery
+kubectl delete deployment es-master
+kubectl delete deployment es-client
+kubectl delete deployment es-data
 ```
 
 <a id="faq">
