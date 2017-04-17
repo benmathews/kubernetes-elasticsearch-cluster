@@ -25,3 +25,5 @@ http:
 discovery:
   zen:
     minimum_master_nodes: 3
+
+xpack.security.enabled: "false"
