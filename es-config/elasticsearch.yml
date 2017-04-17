@@ -24,4 +24,4 @@ http:
 
 discovery:
   zen:
-    minimum_master_nodes: ${NUMBER_OF_MASTERS}
+    minimum_master_nodes: 3

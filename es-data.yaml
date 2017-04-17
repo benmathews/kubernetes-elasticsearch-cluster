@@ -50,6 +50,8 @@ spec:
           value: "false"
         - name: NODE_INGEST
           value: "false"
+        - name: NODE_DATA
+          value: "true"
         - name: HTTP_ENABLE
           value: "false"
         - name: "ES_JAVA_OPTS"
@@ -61,7 +63,12 @@ spec:
         volumeMounts:
         - name: storage
           mountPath: /data
+        - name: config
+          mountPath: /usr/share/elasticsearch/config/
       volumes:
           - emptyDir:
               medium: ""
             name: "storage"
+          - name: "config"
+            configMap:
+              name: "es-config"
