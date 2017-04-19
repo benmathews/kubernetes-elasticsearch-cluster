@@ -12,6 +12,7 @@ spec:
       labels:
         component: elasticsearch
         role: master
+        uniqueconstraint: esmaster
       annotations:
         pod.beta.kubernetes.io/init-containers: '[
           {
@@ -24,6 +25,25 @@ spec:
             }
           }
         ]'
+        scheduler.alpha.kubernetes.io/affinity: >
+          {
+            "podAntiAffinity": {
+              "requiredDuringSchedulingIgnoredDuringExecution": [
+                {
+                  "labelSelector": {
+                    "matchExpressions": [
+                      {
+                        "key": "uniqueconstraint",
+                        "operator": "In",
+                        "values": ["esmaster"]
+                      }
+                    ]
+                  },
+                  "topologyKey": "kubernetes.io/hostname"
+               }
+              ]
+             }
+           }
     spec:
       containers:
       - name: es-master
@@ -45,7 +65,7 @@ spec:
             fieldRef:
               fieldPath: metadata.name
         - name: "CLUSTER_NAME"
-          value: "myesdb"
+          value: "k8s-elasticsearch-prod"
         - name: NODE_MASTER
           value: "true"
         - name: NODE_INGEST

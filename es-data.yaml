@@ -6,7 +6,7 @@ metadata:
     component: elasticsearch
     role: data
 spec:
-  replicas: 2
+  replicas: 10
   template:
     metadata:
       labels:
@@ -45,7 +45,7 @@ spec:
             fieldRef:
               fieldPath: metadata.name
         - name: "CLUSTER_NAME"
-          value: "myesdb"
+          value: "k8s-elasticsearch-prod"
         - name: NODE_MASTER
           value: "false"
         - name: NODE_INGEST
