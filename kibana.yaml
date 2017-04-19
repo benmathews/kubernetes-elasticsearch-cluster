@@ -1,0 +1,50 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: kibana
+  labels:
+    component: elasticsearch
+    role: kibana
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: elasticsearch
+      role: kibana
+  template:
+    metadata:
+      labels:
+        component: elasticsearch
+        role: kibana
+    spec:
+      containers:
+      - name: kibana
+        image: docker.elastic.co/kibana/kibana:5.3.0
+        env:
+        - name: ELASTICSEARCH_URL
+          value: "http://elasticsearch:9200"
+        - name: XPACK_SECURITY_ENABLED
+          value: "false"
+        - name: XPACK_MONITORING_ENABLED
+          value: "false"	  
+        ports:
+        - containerPort: 5601
+          name: http
+          protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kibana
+  labels:
+    component: elasticsearch
+    role: kibana
+spec:
+  type: LoadBalancer
+  selector:
+    component: elasticsearch
+    role: kibana
+  ports:
+  - name: http
+    port: 5601
+    protocol: TCP
