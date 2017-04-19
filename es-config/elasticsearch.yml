@@ -25,5 +25,7 @@ http:
 discovery:
   zen:
     minimum_master_nodes: 3
+    ping.unicast.hosts: "elasticsearch-discovery"
 
 xpack.security.enabled: "false"
+
